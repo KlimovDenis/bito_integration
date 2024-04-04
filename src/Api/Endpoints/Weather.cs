@@ -1,10 +1,12 @@
-﻿using Carter;
+﻿using Api.Models.Weather;
+using Carter;
+using System.Threading.Tasks;
 
 namespace Api.Endpoints;
 
 public sealed class Weather : ICarterModule
 {
-    private static readonly IReadOnlyList<string> Summaries = new[]
+    private IReadOnlyList<string> summaries = new[]
     {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
@@ -20,16 +22,14 @@ public sealed class Weather : ICarterModule
                     (
                         DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
                         Random.Shared.Next(-20, 55),
-                        Summaries[Random.Shared.Next(Summaries.Count)]
+                        summaries[Random.Shared.Next(summaries.Count)]
                     ));
                 
                 return forecast;
             })
             .WithName("GetWeatherForecast");
-    }
 
-    private record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-    {
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        group.MapDelete("/forecast", Results.NoContent)
+            .WithName("DeleteWeatherForecast");
     }
 }
