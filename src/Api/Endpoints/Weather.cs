@@ -24,8 +24,8 @@ public sealed class Weather : ICarterModule
                         Random.Shared.Next(-20, 55),
                         summaries[Random.Shared.Next(summaries.Count)]
                     ));
-                
-                return forecast;
+
+                return (forecast, forecast.Count());
             })
             .WithName("GetWeatherForecast");
 
