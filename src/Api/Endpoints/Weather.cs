@@ -1,4 +1,6 @@
-﻿using Carter;
+﻿using Api.Models;
+using Api.Models;
+using Carter;
 
 namespace Api.Endpoints;
 
@@ -26,10 +28,5 @@ public sealed class Weather : ICarterModule
                 return forecast;
             })
             .WithName("GetWeatherForecast");
-    }
-
-    private record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-    {
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
     }
 }
